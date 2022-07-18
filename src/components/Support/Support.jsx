@@ -1,60 +1,64 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Button, TextField } from '@material-ui/core';
 
 
 function Support(){
+  const dispatch = useDispatch();
+  const history = useHistory(); 
+  const feedback = useSelector(store => store.feedback);
 
-    const dispatch = useDispatch();
-    const history = useHistory(); 
+  let supportReduxState;
+  
+  if (feedback.support) {
+    console.log('support is', feedback.support);
+    supportReduxState = feedback.support;
+  } else {
+    console.log('support is undefined');
+    supportReduxState = '';
+  }
 
-    //  local state for input
-    const [support, setSupport] = useState('');
+  // local state for input
+  const [support, setSupport] = useState(supportReduxState);
 
-
-
-    const handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
+
     console.log('in handleSubmit, support is: ', support);
 
-    // validate data
+
     if (support === '') {
-    return alert('Please enter a number between 1 and 5');
+      return alert('Please enter a number between 1 and 5');
     } else if (support > 5 || support < 1)     {
-    return alert('Please enter a number between 1 and 5');
+      return alert('Please enter a number between 1 and 5 ');
     } else {
-    dispatch({
-        type: 'SUPPORT',
-        payload: {support}
-    })
-      // reset local state on submission
-    setSupport('');
 
-      // move user to the next page 
-    history.push('/Comments');
-    }
-}
+      dispatch({
+        type: 'SET_SUPPORT_RATING',
+        payload: { property: 'support', value: support }
+      })
 
-return(
+      setSupport('');
+
+      history.push('/question4');
+    } 
+  }
+
+
+  return(
     <>
-    <h2>How much did you feel supported today?</h2>
-    <form onSubmit={handleSubmit}>
-        <TextField 
-        type="number" 
-        id="filled-basic" 
-        placeholder="1 - 5" 
-        min="1"
-        max="5"
+      <h2>Support?</h2>
+      <form onSubmit={handleSubmit}>
+        <input 
+        placeholder='1-5'
         value={support}
-        // turn to number
-        onChange={event => setSupport(Number(event.target.value))} 
-        />
-        <br />
-        <Button onClick={handleSubmit}>Next</Button>
-    </form>
+        onChange={event => setSupport(Number(event.target.value))}
+        ></input>
+        <button onClick={handleSubmit}>Next</button>
+      </form>
+
     </>
   );
-} 
+}
 
 export default Support;

@@ -1,43 +1,52 @@
-// import React from 'react';
-// import Axios from 'axios';
-// import './App.css';
+import React, { useState, useEffect } from 'react';
+import { HashRouter as Router, Route, Link, useHistory } from 'react-router-dom';
+import axios from 'axios';
 
-import React from 'react';
+// App.jsx Stylesheet
 import './App.css';
-import Feelings from './../Feelings/Feelings';
-import Understanding from './../Understanding/Understanding';
-import Support from './../Support/Support';
-import Comments from './../Comments/Comments';
-import Review from './../Review/Review';
-import Success from './../Success/Success';
-import {HashRouter as Router, Route } from 'react-router-dom';
+
+// Components (User "views")
+import Comments from '../Comments/Comments';
+import Feeling from '../Feeling/Feeling';
+import Home from '../Home/Home';
+import ReviewFeedback from '../ReviewFeedback/ReviewFeedback'
+import Support from '../Support/Support';
+import Understanding from '../Understanding/Understanding';
 
 function App() {
 
+  
   return (
-    <Router>
     <div className='App'>
+      
       <header className='App-header'>
         <h1 className='App-title'>Feedback!</h1>
         <h4>Don't forget it!</h4>
-        <Route path='/' />
-        <Route />
-        <Route path='/Feelings' />
-        <Feelings />
-        <Route />
-        <Route path='/Understanding' />
-        <Understanding />
-        <Route />
-        <Route path='/Support' />
-        <Support />
-        <Route />
-
-        {/* <Route exact path='/Comments' component={Comments} />
-        <Route exact path='/Review' component={Review} />
-        <Route exact path='/Success' component={Success} />  */}
       </header>
+
+      <main className='App-main'>
+        <Router>
+          <Route path="/" exact>
+            <Home />
+          </Route>
+          <Route path="/question1">
+            <Feeling />
+          </Route>
+          <Route path="/question2">
+            <Understanding />
+          </Route>
+          <Route path="/question3">
+              <Support />
+          </Route>
+          <Route path="/question4">
+            <Comments />
+          </Route>
+          <Route path="/reviewFeedback">
+            <ReviewFeedback />
+          </Route>
+        </Router>
+      </main>
     </div>
-    </Router>
   );
 }
 

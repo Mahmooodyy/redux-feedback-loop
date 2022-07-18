@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../modules/pool');
 
-//get feedback to display on admin page
+
 router.get('/', (req, res) => {
     console.log('In GET');
     const queryText = `SELECT * FROM "feedback" ORDER BY "id" DESC;`;
@@ -15,14 +15,18 @@ router.get('/', (req, res) => {
     
 })
 
+
+
+//post new feedback to database upon submit
 router.post('/', (req, res) => {
     console.log('In POST');
-    const queryText = `INSERT INTO "feedback" ("feeling", "understanding", "support", "comments")
-                        VALUES ($1, $2, $3, $4);`;
+    const queryText = 
+    `INSERT INTO "feedback" ("feeling", "understanding", "support", "comments") 
+    VALUES ($1, $2, $3, $4);`;
     const feedback = req.body;
+    console.log(feedback.feeling);
 
-
-    pool.query(queryText, [feedback.Feelings, feedback.Understanding, feedback.Support, feedback.Comments] )
+    pool.query(queryText, [feedback.feeling, feedback.understanding, feedback.support, feedback.comments] )
         .then((response) => {
             res.sendStatus(201);
         }).catch((error) => {
@@ -30,6 +34,5 @@ router.post('/', (req, res) => {
             res.sendStatus(500);
         })
 })
-
 
 module.exports = router;

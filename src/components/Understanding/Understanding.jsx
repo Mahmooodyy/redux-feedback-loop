@@ -1,60 +1,64 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Button, TextField } from '@material-ui/core';
 
 
 function Understanding(){
+  const dispatch = useDispatch();
+  const history = useHistory(); 
+  const feedback = useSelector(store => store.feedback);
 
-    const dispatch = useDispatch();
-    const history = useHistory(); 
+  let understandingReduxState;
+  
+  if (feedback.understanding) {
+    console.log('understanding is', feedback.understanding);
+    understandingReduxState = feedback.understanding;
+  } else {
+    console.log('understanding is undefined');
+    understandingReduxState = '';
+  }
 
-    //  local state for input
-    const [understanding, setUnderstanding] = useState('');
+  // local state for input
+  const [understanding, setUnderstanding] = useState(understandingReduxState);
 
-
-
-    const handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('in handleSubmit, understanding is: ', understanding);
 
-    // validate data
+    console.log('in handleSubmit, feeling is: ', understanding);
+
+
     if (understanding === '') {
-    return alert('Please enter a number between 1 and 5');
+      return alert('Please enter a number between 1 and 5');
     } else if (understanding > 5 || understanding < 1)     {
-    return alert('Please enter a number between 1 and 5');
+      return alert('Please enter a number between 1 and 5 ');
     } else {
-    dispatch({
-        type: 'UNDERSTANDING',
-        payload: {understanding }
-    })
-      // reset local state on submission
-    setUnderstanding('');
 
-      // move user to the next page 
-    history.push('/Support');
-    }
-}
+      dispatch({
+        type: 'SET_UNDERSTANDING_RATING',
+        payload: { property: 'understanding', value: understanding }
+      })
 
-return(
+      setUnderstanding('');
+
+      history.push('/question3');
+    } 
+  }
+
+
+  return(
     <>
-    <h2>How well do you think you understood todays contents?</h2>
-    <form onSubmit={handleSubmit}>
-        <TextField 
-        type="number" 
-        id="filled-basic" 
-        placeholder="1 - 5" 
-        min="1"
-        max="5"
+      <h2>Understand?</h2>
+      <form onSubmit={handleSubmit}>
+        <input 
+        placeholder='1-5'
         value={understanding}
-        // turn to number
-        onChange={event => setUnderstanding(Number(event.target.value))} 
-        />
-        <br />
-        <Button onClick={handleSubmit}>Next</Button>
-    </form>
+        onChange={event => setUnderstanding(Number(event.target.value))}
+        ></input>
+        <button onClick={handleSubmit}>Next</button>
+      </form>
+
     </>
-);
-} 
+  );
+}
 
 export default Understanding;
