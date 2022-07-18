@@ -4,41 +4,41 @@ import { useHistory } from 'react-router-dom';
 import { Button, TextField } from '@material-ui/core';
 
 
-function Understanding(){
+function Feelings(){
 
     const dispatch = useDispatch();
     const history = useHistory(); 
 
     //  local state for input
-    const [understanding, setUnderstanding] = useState('');
+    const [feeling, setFeeling] = useState('');
 
 
 
     const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('in handleSubmit, understanding is: ', understanding);
+    console.log('in handleSubmit, feeling is: ', feeling);
 
     // validate data
-    if (understanding === '') {
+    if (feeling === '') {
     return alert('Please enter a number between 1 and 5');
-    } else if (understanding > 5 || understanding < 1)     {
+    } else if (feeling > 5 || feeling < 1)     {
     return alert('Please enter a number between 1 and 5');
     } else {
     dispatch({
-        type: 'UNDERSTANDING',
-        payload: {understanding }
+        type: 'FEELINGS',
+        payload: {feeling }
     })
       // reset local state on submission
-    setUnderstanding('');
+    setFeeling('');
 
       // move user to the next page 
-    history.push('/Support');
+    history.push('/Understanding');
     }
 }
 
 return(
     <>
-    <h2>How well do you think you understood todays contents?</h2>
+    <h2>How are you feeling today?</h2>
     <form onSubmit={handleSubmit}>
         <TextField 
         type="number" 
@@ -46,15 +46,15 @@ return(
         placeholder="1 - 5" 
         min="1"
         max="5"
-        value={understanding}
+        value={feeling}
         // turn to number
-        onChange={event => setUnderstanding(Number(event.target.value))} 
+        onChange={event => setFeeling(Number(event.target.value))} 
         />
         <br />
         <Button onClick={handleSubmit}>Next</Button>
     </form>
     </>
-);
+  );
 } 
 
-export default Understanding;
+export default Feelings;
