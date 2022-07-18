@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Route, Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
-// App.jsx Stylesheet
+
 import './App.css';
 
-// Components (User "views")
+
 import Comments from '../Comments/Comments';
 import Feeling from '../Feeling/Feeling';
 import Home from '../Home/Home';

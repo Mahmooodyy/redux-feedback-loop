@@ -49,7 +49,8 @@ function Understanding(){
     <>
       <h2>Understand?</h2>
       <form onSubmit={handleSubmit}>
-        <input 
+        <input
+        type={'number'}
         placeholder='1-5'
         value={understanding}
         onChange={event => setUnderstanding(Number(event.target.value))}

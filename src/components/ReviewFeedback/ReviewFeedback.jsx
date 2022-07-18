@@ -3,21 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 
-function ReviewFeedback({isFeedbackSubmitted, setIsFeedbackSubmitted}) {
+function ReviewFeedback() {
   const history = useHistory();
   const dispatch = useDispatch();
   const feedback = useSelector(store => store.feedback);
 
-  
-
-
   const backHome = () => {
     dispatch({ type: 'CLEAR_FEEDBACK' });
-    
+
     history.push('/');
   };
-
-
 
   const submitFeedback = () => {
     console.log('in submitFeedback', feedback);

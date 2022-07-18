@@ -50,6 +50,7 @@ function Support(){
       <h2>Support?</h2>
       <form onSubmit={handleSubmit}>
         <input 
+        type={'number'}
         placeholder='1-5'
         value={support}
         onChange={event => setSupport(Number(event.target.value))}

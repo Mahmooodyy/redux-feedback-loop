@@ -13,7 +13,7 @@ function Comments(){
     console.log('comments is', feedback.comments);
     commentsReduxState = feedback.comments;
   } else {
-    console.log('support is undefined');
+    console.log('comment is undefined');
     commentsReduxState = '';
   }
 
